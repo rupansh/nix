@@ -34,6 +34,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added `EventFilter` bitflags for `EV_DISPATCH` and `EV_RECEIPT` on OpenBSD.
   (#[1252](https://github.com/nix-rust/nix/pull/1252))
 - `CpuSet` now implements `Default`.
+- `CpuSet` and `UnixCredentials` now implement `Default`.
   (#[1244](https://github.com/nix-rust/nix/pull/1244))
 
 ### Changed
