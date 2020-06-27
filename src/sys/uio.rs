@@ -86,7 +86,7 @@ pub fn pread(fd: RawFd, buf: &mut [u8], offset: off_t) -> Result<usize>{
 /// therefore not represented in Rust by an actual slice as `IoVec` is. It
 /// is used with [`process_vm_readv`](fn.process_vm_readv.html)
 /// and [`process_vm_writev`](fn.process_vm_writev.html).
-#[cfg(target_os = "linux")]
+#[cfg(any(target_os = "linux", target_os = "android"))]
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct RemoteIoVec {
@@ -110,13 +110,13 @@ pub struct RemoteIoVec {
 /// `CAP_SYS_PTRACE`), or you must be running as the same user as the
 /// target process and the OS must have unprivileged debugging enabled.
 ///
-/// This function is only available on Linux.
+/// This function is only available on Linux and Android
 ///
 /// [`process_vm_writev`(2)]: http://man7.org/linux/man-pages/man2/process_vm_writev.2.html
 /// [ptrace]: ../ptrace/index.html
 /// [`IoVec`]: struct.IoVec.html
 /// [`RemoteIoVec`]: struct.RemoteIoVec.html
-#[cfg(target_os = "linux")]
+#[cfg(any(target_os = "linux", target_os = "android"))]
 pub fn process_vm_writev(
     pid: crate::unistd::Pid,
     local_iov: &[IoVec<&[u8]>],
@@ -151,7 +151,7 @@ pub fn process_vm_writev(
 /// [`ptrace`]: ../ptrace/index.html
 /// [`IoVec`]: struct.IoVec.html
 /// [`RemoteIoVec`]: struct.RemoteIoVec.html
-#[cfg(any(target_os = "linux"))]
+#[cfg(any(target_os = "linux", target_os = "android"))]
 pub fn process_vm_readv(
     pid: crate::unistd::Pid,
     local_iov: &[IoVec<&mut [u8]>],
